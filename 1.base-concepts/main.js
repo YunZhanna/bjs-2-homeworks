@@ -9,9 +9,9 @@ function calculateQuadraticEquation(){
 }
 
 function calculateMortgage() {
-    let percent = window.percent.value;
-    let contribution = window.contribution.value;
-    let amount = window.amount.value;
+    let percent = +window.percent.value;
+    let contribution = +window.contribution.value;
+    let amount = +window.amount.value;
     let date = new Date(window.date.value);
 
     let result = calculateTotalMortgage(percent, contribution, amount, date);
