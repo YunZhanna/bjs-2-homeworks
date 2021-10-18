@@ -1,15 +1,15 @@
 function solveEquation(a, b, c) {
   let arr = [];
   
-  let d = b** - 4 * a * c;
+  let d = b**2 - 4 * a * c;
 
-  if (d = 0) {
-    x = -b / (2 * a);
+  if (d === 0) {
+   let x = -b / (2 * a);
     arr.push(x);
     
   } else if (d > 0) {
-    x1 = (-b + Math.sqrt(d)) / (2 * a) 
-    x2 = (-b - Math.sqrt(d)) / (2 * a)
+   let x1 = (-b + Math.sqrt(d)) / (2 * a) 
+   let x2 = (-b - Math.sqrt(d)) / (2 * a)
     arr.push(x1, x2);
 
   } else if (d < 0) {
@@ -25,24 +25,28 @@ function solveEquation(a, b, c) {
 
 function calculateTotalMortgage(percent, contribution, amount, date) {
   let totalAmount;
-  
-  if (typeof percent !== "number") {
+
+  if (typeof percent === "number") {
   return `Параметр "Процентная ставка" содержит неправильное значение "${percent}"`;
-  } else if (typeof contribution !== "number") {
+  } else if (typeof contribution === "number") {
   return `Параметр "Первоначальный взнос" содержит неправильное значение "${contribution}"`;
-  } else if (typeof amount !== "number") {
+  } else if (typeof amount === "number") {
   return `Параметр "Сумма кредита" содержит неправильное значение "${amount}"`;
   } else {
   let credit = amount - contribution;
-  let todayDate = new Date();
+  let dateNow = new Date();
   let date1 = date.getFullYear();
-  let date2 = todayDate.getFullYear();
-  let creditTerm = (date1 - date2) * 12;
+  let date2 = dateNow.getFullYear();
+  let creditTerm = (date1 - date2 - 1) * 12;
+  let month1 = date.getMonth();
+  let month2 = dateNow.getMonth();
+  let monthLeft = 11 - month1 + (month2 + 1);
+  let totalMonth = creditTerm + monthLeft;
   let monthlyPercent = percent / 12 / 100;
-  let monthlyPayment = credit * (monthlyPercent + monthlyPercent / (((1 + monthlyPercent)**creditTerm) - 1));
-  let totalPercent = monthlyPayment * creditTerm
-  totalAmount = Math.round((contribution + amount + totalPercent) * 100) / 100;
-  console.log(totalAmount);
+  let monthlyPayment = credit * (monthlyPercent + monthlyPercent / (Math.pow(1 + monthlyPercent, totalMonth) - 1)) * totalMonth;
+  let totalPercent = monthlyPayment * totalMonth
+  totalAmount = Math.round(monthlyPayment * 100) / 100;
+  console.log(totalAmount.toFixed(2));
   
   return totalAmount;
   }
